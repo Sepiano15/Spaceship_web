@@ -25,8 +25,10 @@ SECRET_KEY = '=71p5*!mv!&lpu#ih^b4z(^yn)_%!44n=8z#6zg#sjba&ytd-y'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
-
+ALLOWED_HOSTS = [
+    'Noriaki.pythonanywhere.com',
+    '127.0.0.1',
+]
 
 # Application definition
 AUTH_USER_MODEL='Manager.myuser'
