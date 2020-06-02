@@ -25,19 +25,12 @@ class UserForm(forms.ModelForm):
         self.fields['username'].widget.attrs['maxlength'] = 15
 
 class LoginForm(forms.ModelForm):
-    #password = forms.CharField(widget=forms.PasswordInput,required=True)
+    username = forms.CharField(label='아이디',widget=forms.TextInput(attrs={'class': 'form-control', 'style': 'width: 80%', 'placeholder': '아이디를 입력합니다.'}))
+    password = forms.CharField(label='비밀번호',widget=forms.PasswordInput(attrs={'class': 'form-control', 'style': 'width: 80%', 'placeholder': '비밀번호를 입력합니다.'}))
 
     class Meta:
         model = myuser
         fields = ['username', 'password'] # 로그인 시에는 유저이름과 비밀번호만 입력 받는다.
-        widgets = { #장고에서 제공하는 폼의 형태를 빌려올 수 있다.
-            'username': forms.TextInput(
-                attrs={'class': 'form-control', 'style': 'width: 100%', 'placeholder': '아이디를 입력합니다.'}
-            ),
-            'password': forms.PasswordInput(
-                attrs={'class': 'form-control', 'style': 'width: 100%', 'placeholder': '비밀번호를 입력합니다.'}
-            ),
-        }
         labels = {
             'username' : '아이디',
             'password' : '패스워드'
@@ -49,14 +42,30 @@ class UpdateForm(UserChangeForm):
         fields = ['score_one', 'score_two', 'score_three'] 
 
 class UserCreationForm(forms.ModelForm):
-    username = forms.CharField(label='아이디')
-    first_name = forms.CharField(label='닉네임')
-    password1 = forms.CharField(label='비밀번호', widget=forms.PasswordInput)
-    password2 = forms.CharField(label='비밀번호 확인', widget=forms.PasswordInput)
+    username = forms.CharField(label='아이디',widget=forms.TextInput(attrs={'class': 'form-control', 'style': 'width: 80%', 'placeholder': '아이디를 입력합니다.'}))
+    first_name = forms.CharField(label='닉네임',widget=forms.TextInput(attrs={'class': 'form-control', 'style': 'width: 80%', 'placeholder': '닉네임을 입력합니다.'}))
+    password1 = forms.CharField(label='비밀번호',widget=forms.PasswordInput(attrs={'class': 'form-control', 'style': 'width: 80%', 'placeholder': '비밀번호를 입력합니다.'}))
+    password2 = forms.CharField(label='비밀번호 확인',widget=forms.PasswordInput(attrs={'class': 'form-control', 'style': 'width: 80%', 'placeholder': '비밀번호를 입력합니다.'}))
 
     class Meta:
         model = myuser
         fields = ['username','first_name']
+        '''
+        widgets = { 
+            'username': forms.TextInput(
+                attrs={'class': 'form-control', 'style': 'width: 100%', 'placeholder': '아이디를 입력합니다.'}
+            ),
+            'first_name': forms.TextInput(
+                attrs={'class': 'form-control', 'style': 'width: 100%', 'placeholder': '닉네임을 입력합니다.'}
+            ),
+            'password1': forms.PasswordInput(
+                attrs={'class': 'form-control', 'style': 'width: 100%', 'placeholder': '비밀번호를 입력합니다.'}
+            ),
+            'password2': forms.PasswordInput(
+                attrs={'class': 'form-control', 'style': 'width: 100%', 'placeholder': '비밀번호를 다시 한 번 입력합니다.'}
+            ),
+        }
+        '''
 
     def clean_password2(self):
         password1 = self.cleaned_data.get("password1")

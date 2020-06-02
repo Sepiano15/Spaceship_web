@@ -22,7 +22,7 @@
               {% else %}
               <form method="POST" action="{% url 'index' %}" class="sign-in-form">
                 {% csrf_token %}
-                <h2 class="sub-title"> 로그인 </h2>
+                <!--<h2 class="sub-title"> 로그인 </h2>-->
                 {{ form.as_p }}
                 <input type="submit" class="save btn btn-success" value="로그인">
                 <a href="{% url 'signup' %}">
