@@ -1,0 +1,9 @@
+<form action="{%url 'update_one' %}" method="post">
+    {% csrf_token %}
+    운석피하기 : <input type="text" name="score_one" value="{{ user.score_one }}">
+    <!--
+    핑퐁 게임 : <input type="text" name="score_three" value="{{ user.score_three }}">
+    텐가이 : <input type="text" name="score_three" value="{{ user.score_three }}">
+-->
+    <input type="submit" value="업데이트"/> 
+</form>

@@ -1,0 +1,5 @@
+<form action="{%url 'update_three' %}" method="post">
+    {% csrf_token %}
+    텐가이 : <input type="text" name="score_three" value="{{ user.score_three }}">
+    <input type="submit" value="업데이트"/> 
+</form>

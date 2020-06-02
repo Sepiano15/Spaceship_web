@@ -1,0 +1,5 @@
+<form action="{%url 'update_two' %}" method="post">
+    {% csrf_token %}
+    핑퐁 게임 : <input type="text" name="score_two" value="{{ user.score_two }}">
+    <input type="submit" value="업데이트"/> 
+</form>

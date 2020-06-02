@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+
+{% block content_login %}
+    <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+    <div class="ftco-blocks-cover-1">
+      <div class="site-section-cover overlay" data-stellar-background-ratio="0.5" style="background-image: url('/static/images/hero_1.jpg')">
+        <div class="container">
+          <div class="row align-items-center ">
+            <div class="col-md-5 mt-5 pt-5">
+                <h1 class="mb-3">회원가입을 합니다.</h1>
+                <p>정보를 올바르게 작성하세요.</p>
+            </div>
+            <div class="col-md-6 ml-auto">
+              <div class="white-dots">
+                <h2>회원가입</h2>
+                    {% for message in messages %}
+
+                           <div class="alert alert-success">
+                               <a class="close" href="#" data-dismiss="alert">×</a>
+
+                               {{ message }}
+
+                           </div>
+                   {% endfor %}
+                <form method="post">
+                    {% csrf_token %}
+                    {{ signup_form.as_p}}
+                    <!--
+                    {% csrf_token %}
+                    <p>아이디 : {{ signup_form.username }}</p>
+                    <p>닉네임 : {{ signup_form.last_name }}</p>
+                    <div class="content_content">
+                        <p>비밀번호 : <input type="password" name="password" id="password_1" class="pw" placeholder="비밀번호"></p>
+                    
+                    </div>
+                 
+                    <div class="content_content">
+                       <p>비밀번호 확인 : <input type="password" id="password_2" class="pw" placeholder="비밀번호 확인"></p>
+                        <span id="alert-success" style="display: none;">비밀번호가 일치합니다.</span>
+                        <span id="alert-danger" style="display: none; color: #d92742; font-weight: bold; ">비밀번호가 일치하지 않습니다.</span>
+                        <input type="submit" id="cert" name="id_configure" value="계속하기" style="display:none"/>
+                    </div>
+                    <input type="submit" id="cert" name="id_configure" value="중복확인" style="display:none"/> 
+                -->
+                    <input type="submit" id="cert" name="id_configure" value="가입하기"/> 
+                </form>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+        $('.pw').focusout(function () {
+            var pwd1 = $("#password_1").val();
+            var pwd2 = $("#password_2").val();
+     
+            if ( pwd1 != '' && pwd2 == '' ) {
+                null;
+            } else if (pwd1 != "" || pwd2 != "") {
+                if (pwd1 == pwd2) {
+                    $("#alert-success").css('display', 'inline-block');
+                    $("#alert-danger").css('display', 'none');
+                    document.getElementById("cert").style.display = 'block';
+
+                } else {
+                    alert("비밀번호가 일치하지 않습니다. 비밀번호를 재확인해주세요.");
+                    $("#alert-success").css('display', 'none');
+                    $("#alert-danger").css('display', 'inline-block');
+                }
+            }
+        });
+    </script>
+{% endblock %}
