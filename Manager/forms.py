@@ -7,49 +7,39 @@ from django.contrib.auth.forms import UserChangeForm
 from django.contrib.auth import get_user_model
 
 class UserForm(forms.ModelForm):
-    password = forms.CharField(max_length=12,widget=forms.PasswordInput,required=True)
-    #password_check = forms.CharField(max_length=200, widget=forms.PasswordInput())
-
     class Meta:
         model = myuser
-        fields = ['username', 'password','last_name']
-
-    # def InsertUsername(self,user): #사용자가 중복확인을 완료했을 때 호출된다. form의 아이디에 사용자가 적은 값을 넣는다.
-    #     self.Meta.fields[0]=user #중복확인 버튼을 눌러도 입력한 아이디가 사라지지 않는다.
-
-    # def InsertPassword(self,password): 
-    #     self.Meta.fields[1]=password
-
-    def __init__(self, *args, **kwargs):
-        super(UserForm, self).__init__( *args, **kwargs)
-        self.fields['username'].widget.attrs['maxlength'] = 15
+        fields = ['first_name', 'score_one', 'score_two', 'score_three']
 
 class LoginForm(forms.ModelForm):
-    username = forms.CharField(label='아이디',widget=forms.TextInput(attrs={'class': 'form-control', 'style': 'width: 80%', 'placeholder': '아이디를 입력합니다.'}))
-    password = forms.CharField(label='비밀번호',widget=forms.PasswordInput(attrs={'class': 'form-control', 'style': 'width: 80%', 'placeholder': '비밀번호를 입력합니다.'}))
+    username = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control', 'style': 'width: 80%', 'placeholder': '아이디를 입력합니다.'}))
+    password = forms.CharField(widget=forms.PasswordInput(attrs={'class': 'form-control', 'style': 'width: 80%', 'placeholder': '비밀번호를 입력합니다.'}))
 
     class Meta:
         model = myuser
         fields = ['username', 'password'] # 로그인 시에는 유저이름과 비밀번호만 입력 받는다.
+        '''
         labels = {
             'username' : '아이디',
             'password' : '패스워드'
         }
-
-class UpdateForm(UserChangeForm):
-    class Meta:
-        model = get_user_model()
-        fields = ['score_one', 'score_two', 'score_three'] 
+        '''
 
 class UserCreationForm(forms.ModelForm):
-    username = forms.CharField(label='아이디',widget=forms.TextInput(attrs={'class': 'form-control', 'style': 'width: 80%', 'placeholder': '아이디를 입력합니다.'}))
-    first_name = forms.CharField(label='닉네임',widget=forms.TextInput(attrs={'class': 'form-control', 'style': 'width: 80%', 'placeholder': '닉네임을 입력합니다.'}))
-    password1 = forms.CharField(label='비밀번호',widget=forms.PasswordInput(attrs={'class': 'form-control', 'style': 'width: 80%', 'placeholder': '비밀번호를 입력합니다.'}))
-    password2 = forms.CharField(label='비밀번호 확인',widget=forms.PasswordInput(attrs={'class': 'form-control', 'style': 'width: 80%', 'placeholder': '비밀번호를 입력합니다.'}))
+    username = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control', 'style': 'width: 80%', 'placeholder': '아이디를 입력합니다.'}))
+    first_name = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control', 'style': 'width: 80%', 'placeholder': '닉네임을 입력합니다.'}))
+    password1 = forms.CharField(widget=forms.PasswordInput(attrs={'class': 'form-control', 'style': 'width: 80%', 'placeholder': '비밀번호를 입력합니다.'}))
+    password2 = forms.CharField(widget=forms.PasswordInput(attrs={'class': 'form-control', 'style': 'width: 80%', 'placeholder': '비밀번호를 입력합니다.'}))
 
     class Meta:
         model = myuser
         fields = ['username','first_name']
+        labels = {
+            'username' : '아이디',
+            'first_name' : '닉네임',
+            'password1' : '패스워드',
+            'password2' : '패스워드 확인'
+        }
         '''
         widgets = { 
             'username': forms.TextInput(

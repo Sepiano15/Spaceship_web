@@ -27,8 +27,8 @@
       <div class="container">
         <div class="row justify-content-center text-center">
           <div class="col-md-7 mb-5">
-            <h5 class="subtitle">Features</h5>
-            <h2>A creative digital agency with excellence services</h2>
+            <h5 class="subtitle">랭킹</h5>
+            <h2>각 게임별 최고점수 플레이어 조회</h2>
           </div>
         </div>
         <div class="row">
@@ -37,8 +37,11 @@
               <span class="wrap-icon">
                 <span class="icon-home"></span>
               </span>
-              <h3>Recusandae Cumque</h3>
-              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptas ullam, cumque a debitis reiciendis dolorum ad minus error.</p>
+              {% for rank1 in ranker1 %}
+              <h2>운석 피하기</h2>
+              <h3>닉네임 : {{rank1.first_name}}</h3>
+              <h2>{{rank1.score_one}}점 / 1위</h2>
+              {% endfor %}
             </div>
           </div>
           <div class="col-md-6 col-lg-4 mb-4 mb-lg-4">
@@ -46,8 +49,11 @@
               <span class="wrap-icon">
                 <span class="icon-face"></span>
               </span>
-              <h3>Voluptas Ullam</h3>
-              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptas ullam, cumque a debitis reiciendis dolorum ad minus error.</p>
+              <h2>핑퐁 게임</h2>
+              {% for rank2 in ranker2 %}
+              <h3>닉네임 : {{rank2.first_name}}</h3>
+              <h2>{{rank2.score_two}}점 / 1위</h2>
+              {% endfor %}
             </div>
           </div>
           <div class="col-md-6 col-lg-4 mb-4 mb-lg-4">
@@ -55,41 +61,13 @@
               <span class="wrap-icon">
                 <span class="icon-drafts"></span>
               </span>
-              <h3>Reiciendis Dolorum Minu</h3>
-              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptas ullam, cumque a debitis reiciendis dolorum ad minus error.</p>
+              {% for rank3 in ranker3 %}
+              <h2>텐가이</h2>
+              <h3>닉네임 : {{rank3.first_name}}</h3>
+              <h2>{{rank3.score_three}}점 / 1위</h2>
+              {% endfor %}
             </div>
-          </div>
-
-          <div class="col-md-6 col-lg-4 mb-4 mb-lg-4">
-            <div class="feature-1">
-              <span class="wrap-icon">
-                <span class="icon-home"></span>
-              </span>
-              <h3>Recusandae Cumque</h3>
-              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptas ullam, cumque a debitis reiciendis dolorum ad minus error.</p>
-            </div>
-          </div>
-          <div class="col-md-6 col-lg-4 mb-4 mb-lg-4">
-            <div class="feature-1">
-              <span class="wrap-icon">
-                <span class="icon-face"></span>
-              </span>
-              <h3>Voluptas Ullam</h3>
-              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptas ullam, cumque a debitis reiciendis dolorum ad minus error.</p>
-            </div>
-          </div>
-          <div class="col-md-6 col-lg-4 mb-4 mb-lg-4">
-            <div class="feature-1">
-              <span class="wrap-icon">
-                <span class="icon-drafts"></span>
-              </span>
-              <h3>Reiciendis Dolorum Minu</h3>
-              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptas ullam, cumque a debitis reiciendis dolorum ad minus error.</p>
-            </div>
-          </div>
-
-        </div>
-        
+          </div>        
       </div>
     </div>
 {% endblock %}

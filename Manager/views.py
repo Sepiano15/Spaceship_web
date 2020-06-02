@@ -2,14 +2,17 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth import login as auth_login # django.contrib.auth 내 함수 login을 import함.
 from django.contrib.auth import logout as auth_logout
-from .forms import UserForm, LoginForm, UserChangeForm, UpdateForm
+from .forms import UserForm, LoginForm, UserChangeForm
 from .forms import UserCreationForm
 from django.contrib.auth import login, authenticate
 from django.contrib import auth, messages
+from django.db.models import Max, Subquery, OuterRef
+from .models import myuser
 
 # Create your views here.
 
 #Session Create
+
 def signup(request):
 	if request.method == 'POST':
 		signup_form = UserCreationForm(request.POST)
@@ -73,6 +76,14 @@ def update_one(request):
 		user = request.user
 		original = user.score_one
 		if original < int(request.POST['score_one']):
+			user_score = myuser.objects.all().order_by('-score_one').values()
+			i = 1
+			for qs in user_score:
+				if qs['score_one'] < int(request.POST['score_one']):
+					break
+				else:
+					i+=1
+			user.rank_one = i
 			user.score_one = request.POST['score_one']
 			user.save()
 		return redirect('index')
@@ -84,6 +95,14 @@ def update_two(request):
 		user = request.user
 		original = user.score_two
 		if original < int(request.POST['score_two']):
+			user_score = myuser.objects.all().order_by('-score_two').values()
+			i = 1
+			for qs in user_score:
+				if qs['score_two'] < int(request.POST['score_two']):
+					break
+				else:
+					i+=1
+			user.rank_two = i
 			user.score_two = request.POST['score_two']
 			user.save()
 		return redirect('index')
@@ -95,6 +114,14 @@ def update_three(request):
 		user = request.user
 		original = user.score_three
 		if original < int(request.POST['score_three']):
+			user_score = myuser.objects.all().order_by('-score_three').values()
+			i = 1
+			for qs in user_score:
+				if qs['score_three'] < int(request.POST['score_three']):
+					break
+				else:
+					i+=1
+			user.rank_three = i
 			user.score_three = request.POST['score_three']
 			user.save()
 		return redirect('index')
@@ -105,7 +132,19 @@ def download(request):
 	return render(request, './download.html',{})
 
 def glory(request):
-	return render(request, './glory.html',{})
+	qs1 = myuser.objects.aggregate(score_one=Max('score_one'))
+	qs2 = myuser.objects.aggregate(score_two=Max('score_two'))
+	qs3 = myuser.objects.aggregate(score_three=Max('score_three'))
+	ranker1 = myuser.objects.filter(score_one=qs1['score_one']).values('first_name','score_one')
+	ranker2 = myuser.objects.filter(score_two=qs2['score_two']).values('first_name','score_two')
+	ranker3 = myuser.objects.filter(score_three=qs3['score_three']).values('first_name','score_three')
+	print(ranker3)
+	context = {
+		'ranker1' : ranker1,
+		'ranker2' : ranker2,
+		'ranker3' : ranker3,
+	}
+	return render(request, './glory.html',context)
 
 def blog(request):
 	return render(request, './blog.html',{})
