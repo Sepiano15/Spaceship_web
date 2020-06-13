@@ -16,8 +16,8 @@ def disapply_ranker(modeladmin, request, queryset):
 disapply_ranker.short_description = 'Ranker를 해제하기'
 
 class UserAdmin(admin.ModelAdmin):
-	list_display = ['username','first_name','score_one','rank_one','score_two','rank_two','score_three','rank_three','ranker']
-	list_filter = ['score_one','score_two','score_three']
+	list_display = ['username','first_name','score_one','rank_one','score_three','rank_three','ranker']
+	list_filter = ['score_one','score_three']
 	actions = [apply_ranker, disapply_ranker,]
 
 admin.site.register(myuser, UserAdmin)

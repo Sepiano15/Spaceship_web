@@ -9,7 +9,7 @@ from django.contrib.auth import get_user_model
 class UserForm(forms.ModelForm):
     class Meta:
         model = myuser
-        fields = ['first_name', 'score_one', 'score_two', 'score_three']
+        fields = ['first_name', 'score_one', 'score_three']
 
 class LoginForm(forms.ModelForm):
     username = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control', 'style': 'width: 80%', 'placeholder': '아이디를 입력합니다.'}))
@@ -41,7 +41,7 @@ class UserCreationForm(forms.ModelForm):
             'password2' : '패스워드 확인'
         }
         '''
-        widgets = { 
+        widgets = {
             'username': forms.TextInput(
                 attrs={'class': 'form-control', 'style': 'width: 100%', 'placeholder': '아이디를 입력합니다.'}
             ),

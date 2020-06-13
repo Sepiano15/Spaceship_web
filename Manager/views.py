@@ -76,15 +76,15 @@ def update_one(request):
 		user = request.user
 		original = user.score_one
 		if original < int(request.POST['score_one']):
-			user_score = myuser.objects.all().order_by('-score_one').values()
+			user_score = myuser.objects.all().order_by('-score_one').values() #쿼리셋 내림차순 후 딕셔너리로 변환
 			i = 1
 			for qs in user_score:
 				if qs['score_one'] < int(request.POST['score_one']):
 					break
 				else:
 					i+=1
-			user.rank_one = i
-			user.score_one = request.POST['score_one']
+			user.rank_one = i #랭킹 업데이트
+			user.score_one = request.POST['score_one'] #점수 업데이트
 			user.save()
 		return redirect('index')
 	return render(request, './update_one.html')

@@ -32,7 +32,7 @@
           </div>
         </div>
         <div class="row">
-          <div class="col-md-6 col-lg-4 mb-4 mb-lg-4">
+          <div class="col-md-6 col-lg-6 mb-6 mb-lg-4">
             <div class="feature-1">
               <span class="wrap-icon">
                 <span class="icon-home"></span>
@@ -44,19 +44,7 @@
               {% endfor %}
             </div>
           </div>
-          <div class="col-md-6 col-lg-4 mb-4 mb-lg-4">
-            <div class="feature-1">
-              <span class="wrap-icon">
-                <span class="icon-face"></span>
-              </span>
-              <h2>핑퐁 게임</h2>
-              {% for rank2 in ranker2 %}
-              <h3>닉네임 : {{rank2.first_name}}</h3>
-              <h2>{{rank2.score_two}}점 / 1위</h2>
-              {% endfor %}
-            </div>
-          </div>
-          <div class="col-md-6 col-lg-4 mb-4 mb-lg-4">
+          <div class="col-md-6 col-lg-6 mb-6 mb-lg-4">
             <div class="feature-1">
               <span class="wrap-icon">
                 <span class="icon-drafts"></span>
@@ -67,7 +55,7 @@
               <h2>{{rank3.score_three}}점 / 1위</h2>
               {% endfor %}
             </div>
-          </div>        
+          </div>
       </div>
     </div>
 {% endblock %}
