@@ -16,7 +16,6 @@ from .models import myuser
 def signup(request):
 	if request.method == 'POST':
 		signup_form = UserCreationForm(request.POST)
-		print(signup_form)
 		if signup_form.is_valid():
 			signup_form.save()
 			return redirect('index')
@@ -50,10 +49,10 @@ def login(request):
         if login_form.is_valid():
             auth_login(request, login_form.get_user())
         return redirect('index')
-    
+
     else:
         login_form = LoginForm()
-    
+
     return render(request, './index.html', {'login_form' : login_form})
 
 def logout(request):
@@ -113,17 +112,39 @@ def update_three(request):
 	if request.method == 'POST':
 		user = request.user
 		original = user.score_three
+		original_ranking = user.rank_three
 		if original < int(request.POST['score_three']):
 			user_score = myuser.objects.all().order_by('-score_three').values()
-			i = 1
+			ranking = 1
 			for qs in user_score:
 				if qs['score_three'] < int(request.POST['score_three']):
 					break
 				else:
-					i+=1
-			user.rank_three = i
+					ranking+=1
+			#print(user_score[ranking-1])
+			#print(len(user_score))
+			if original_ranking == ranking: #같은 순위일 경우
+				user.score_three = request.POST['score_three'] #점수만 갱신
+				user.save()
+				return redirect('index')
+			user.rank_three = ranking #순위 갱신
 			user.score_three = request.POST['score_three']
 			user.save()
+			if original_ranking==0: #처음 스코어를 만들었을 때
+				original_ranking = len(user_score) #끝까지 수정
+			for i in range(ranking-1,original_ranking): #갱신된 순위~원래순위 사이의 값들을 수정
+				query = myuser.objects.filter(username=user_score[i]['username'])
+				print(query)
+				for post in query:
+					if post.username == user.username: #자기꺼는 패스
+						break
+					elif post.rank_three == len(user_score): #꼴찌일땐 패스. 전체 4명인데 5위가 되면 안되서.
+						break
+					else:
+						post.rank_three += 1 #순위 하나씩 늘리고 저장
+						post.save()
+				#query.update(rank_three = query['rank_three']+1)
+
 		return redirect('index')
 	return render(request, './update_three.html')
 
