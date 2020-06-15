@@ -101,6 +101,8 @@ def update_one(request):
 						break
 					elif post.rank_one == len(user_score): #꼴찌일땐 패스. 전체 4명인데 5위가 되면 안되서.
 						break
+					elif post.score_one == 0: #점수가 0점인건 건들지 않기
+						break
 					else:
 						post.rank_one += 1 #순위 하나씩 늘리고 저장
 						post.save()
@@ -159,6 +161,8 @@ def update_three(request):
 					if post.username == user.username: #자기꺼는 패스
 						break
 					elif post.rank_three == len(user_score): #꼴찌일땐 패스. 전체 4명인데 5위가 되면 안되서.
+						break
+					elif post.score_three == 0: #점수가 0점인건 건들지 않기
 						break
 					else:
 						post.rank_three += 1 #순위 하나씩 늘리고 저장
