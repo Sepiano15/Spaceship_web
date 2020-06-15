@@ -74,17 +74,36 @@ def update_one(request):
 	if request.method == 'POST':
 		user = request.user
 		original = user.score_one
+		original_ranking = user.rank_one
 		if original < int(request.POST['score_one']):
 			user_score = myuser.objects.all().order_by('-score_one').values() #쿼리셋 내림차순 후 딕셔너리로 변환
-			i = 1
+			ranking = 1
 			for qs in user_score:
 				if qs['score_one'] < int(request.POST['score_one']):
 					break
 				else:
-					i+=1
-			user.rank_one = i #랭킹 업데이트
-			user.score_one = request.POST['score_one'] #점수 업데이트
+					ranking+=1
+
+			if original_ranking == ranking: #같은 순위일 경우
+				user.score_one = request.POST['score_one'] #점수만 갱신
+				user.save()
+				return redirect('index')
+			user.rank_one = ranking #순위 갱신
+			user.score_one = request.POST['score_one']
 			user.save()
+			#기존 사용자들의 순위 조정
+			if original_ranking==0: #처음 스코어를 만들었을 때
+				original_ranking = len(user_score) #끝까지 수정
+			for i in range(ranking-1,original_ranking): #갱신된 순위~원래순위 사이의 값들을 수정
+				query = myuser.objects.filter(username=user_score[i]['username'])
+				for post in query:
+					if post.username == user.username: #자기꺼는 패스
+						break
+					elif post.rank_one == len(user_score): #꼴찌일땐 패스. 전체 4명인데 5위가 되면 안되서.
+						break
+					else:
+						post.rank_one += 1 #순위 하나씩 늘리고 저장
+						post.save()
 		return redirect('index')
 	return render(request, './update_one.html')
 
@@ -115,14 +134,14 @@ def update_three(request):
 		original_ranking = user.rank_three
 		if original < int(request.POST['score_three']):
 			user_score = myuser.objects.all().order_by('-score_three').values()
+			#순위 매기기
 			ranking = 1
 			for qs in user_score:
 				if qs['score_three'] < int(request.POST['score_three']):
 					break
 				else:
 					ranking+=1
-			#print(user_score[ranking-1])
-			#print(len(user_score))
+			#점수, 순위 갱신
 			if original_ranking == ranking: #같은 순위일 경우
 				user.score_three = request.POST['score_three'] #점수만 갱신
 				user.save()
@@ -130,6 +149,7 @@ def update_three(request):
 			user.rank_three = ranking #순위 갱신
 			user.score_three = request.POST['score_three']
 			user.save()
+			#기존 사용자들의 순위 조정
 			if original_ranking==0: #처음 스코어를 만들었을 때
 				original_ranking = len(user_score) #끝까지 수정
 			for i in range(ranking-1,original_ranking): #갱신된 순위~원래순위 사이의 값들을 수정
